@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Patient;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class PatientController extends Controller
@@ -20,19 +20,34 @@ class PatientController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return void
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function create(Request $request)
     {
+        $address = new AddressController();
+        $address->create($request);
+
         $this->validate($request, [
 
             "user_id" => "required",
 
         ]);
 
-        $patient = new \App\Models\Patient();
+        $patient = new Patient();
         $patient->user_id=$request->user_id;
+        $patient->emergency_contact=$request->emergency_contact;
+        $patient->address=$request->address_id;
         $patient->save();
+
+        $request->request->add(['patient_id' => $patient->patient_id]);
+
+
+        if($request->disability_type!=null){
+            $disability = new DisabilityController();
+            $disability->create($request);
+        }
     }
 
     /**
@@ -55,6 +70,7 @@ class PatientController extends Controller
     public function show(Patient $patient)
     {
         //
+
     }
 
     /**

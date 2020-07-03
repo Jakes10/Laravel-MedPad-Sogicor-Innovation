@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Vital;
+use App\Models\Vital;
 use Illuminate\Http\Request;
 
 class VitalController extends Controller
@@ -20,11 +20,12 @@ class VitalController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return void
      */
     public function create(Request $request)
     {
-        $vital = new \App\Models\Vital();
+        $vital = new Vital();
         $vital->vital_id=$request->vital_id;
         $vital->consultation_id=$request->consultation_id;
         $vital->blood_pressure=$request->blood_pressure;
@@ -56,7 +57,9 @@ class VitalController extends Controller
      */
     public function show(Vital $vital)
     {
-        //
+
+
+
     }
 
     /**

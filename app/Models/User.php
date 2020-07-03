@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use Notifiable;
+//    private $user_id;
+    protected $primaryKey = "user_id";
     private $first_name;
     private $middle_name;
     private $last_name;
@@ -47,6 +49,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+    public function Patient()
+    {
+        return $this->hasOne(Patient::class, 'user_id');
+    }
+
+    public function Doctor()
+    {
+        return $this->hasOne(Doctor::class, 'user_id');
+    }
+
+    public function Pharmacist()
+    {
+        return $this->hasOne(Pharmacist::class, 'user_id');
+    }
 
 
 }

@@ -19,6 +19,6 @@ class Vital extends Model
 
     public function Consultation()
     {
-        return $this->hasMany(Vital::class, 'consultation_id');
+        return $this->hasOne(Vital::class, 'consultation_id');
     }
 }

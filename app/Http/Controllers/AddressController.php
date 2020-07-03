@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Address;
+use App\Models\Address;
 use Illuminate\Http\Request;
 
 class AddressController extends Controller
@@ -20,11 +20,32 @@ class AddressController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return void
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $this->validate($request, [
+
+            "user_id" => "required",
+            "country" => "required",
+            "parish" => "required",
+            "address_1" => "required",
+            "address_2" => "required"
+
+        ]);
+
+        $address = new Address();
+        $address->country=$request->country;
+        $address->parish=$request->parish;
+        $address->address_1=$request->address_1;
+        $address->address_2=$request->address_2;
+        $address->save();
+
+        $request->request->add(['address_id' => $address->address_id]);
+
+
     }
 
     /**

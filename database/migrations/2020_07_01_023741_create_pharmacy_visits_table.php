@@ -14,7 +14,7 @@ class CreatePharmacyVisitsTable extends Migration
     public function up()
     {
         Schema::create('pharmacy_visits', function (Blueprint $table) {
-            $table->bigIncrements('visit_id');
+            $table->bigIncrements('visitation_id');
             $table->bigInteger('consultation_id')->unsigned();
             $table->bigInteger('pharmacist_id')->unsigned();
             $table->string('year');

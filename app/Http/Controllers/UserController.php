@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Doctor;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -37,15 +38,19 @@ class UserController extends Controller
         $user->password=bcrypt($request->password);
         $user->save();
 
-        $request->request->add(['user_id' => $user->user_id]);
+
+        $request->request->add([ 'user_id' => $user->user_id]);
+
 
         if ($request->accountType == "Pharmacist") {
             $pharmacist = new PharmacistController();
             $pharmacist->create($request);
         }
         if ($request->accountType == "Doctor") {
+
             $doctor = new DoctorController();
             $doctor->create($request);
+
         }
         if ($request->accountType == "Patient") {
             $patient = new PatientController();
@@ -53,9 +58,14 @@ class UserController extends Controller
         }
 
         if ($user->save()) {
-            return response()->json(['message' => 'Account Created Successfully'], 200);
+            return response()->json(['message' => 'Account Created Successfully '], 200);
         } else {
             return response()->json(['message' => 'Error Creating Account'], 500);
         }
+    }
+
+    public function show($user_id){
+        $account = User::where('user_id', $user_id)->with(["Patient", "Doctor", "Pharmacist"])->get();
+        return  response()->json($account, 200);
     }
 }

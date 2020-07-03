@@ -19,7 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 ////Create
 Route::post('/signUp', 'UserController@create');
-Route::post('/consultation', 'ConsultaionController@create');
-//Route::post('/createAccount', 'LiquidAccountController@register');
+Route::post('/consultation', 'ConsultationController@create');
+Route::post('/pharmacyVisit', 'PharmacyVisitController@create');
+Route::post('/addDisability', 'DisabilityController@create');
+
+
 //Route::post('/addParty', 'UserController@store');
 //Route::post('/transaction', 'TransactionController@create');

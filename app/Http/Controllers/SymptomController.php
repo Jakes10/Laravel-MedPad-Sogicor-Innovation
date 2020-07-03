@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Symptom;
+use App\Models\Symptom;
 use Illuminate\Http\Request;
 
 class SymptomController extends Controller
@@ -20,11 +20,22 @@ class SymptomController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return void
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $this->validate($request, [
+
+            "symptom_name" => "required",
+            "consultation_id" => "required",
+
+        ]);
+
+        $symptoms = new Symptom();
+        $symptoms->name= $request->symptom_name;
+        $symptoms->consultation_id= $request->consultation_id;
     }
 
     /**

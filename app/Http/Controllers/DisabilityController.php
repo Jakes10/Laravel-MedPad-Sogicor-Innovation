@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Disability;
+use  App\Models\Disability;
 use Illuminate\Http\Request;
 
 class DisabilityController extends Controller
@@ -20,11 +20,24 @@ class DisabilityController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return void
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $this->validate($request, [
+
+            "patient_id"	=> "required",
+            "disability_type"	=> "required",
+
+        ]);
+
+        $disability = new Disability();
+        $disability->patient_id=$request->patient_id;
+        $disability->type=$request->disability_type;
+        $disability->save();
+
     }
 
     /**

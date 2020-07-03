@@ -16,6 +16,7 @@ class CreateSymptomsTable extends Migration
         Schema::create('symptoms', function (Blueprint $table) {
             $table->bigIncrements('symptom_id');
             $table->bigInteger('consultation_id')->unsigned();;
+            $table->string('name');
 
             $table->timestamps();
             $table->foreign('consultation_id')->references('consultation_id')->on('consultations');

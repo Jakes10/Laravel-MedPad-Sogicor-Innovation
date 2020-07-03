@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Consultation;
+use App\Models\Consultation;
 use Illuminate\Http\Request;
 
 class ConsultationController extends Controller
@@ -20,7 +20,9 @@ class ConsultationController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function create(Request $request)
     {
@@ -31,7 +33,7 @@ class ConsultationController extends Controller
             "year" => "required",
             "month" => "required",
             "day" => "required",
-            "doctor_remark" =>  "required",
+//            "doctor_remark" =>  "required",
 
 
         ]);
@@ -49,6 +51,12 @@ class ConsultationController extends Controller
 
         $vitals = new VitalController();
         $vitals->create($request);
+
+
+//        if($request->symptom!=null){
+        //        $symptoms = new SymptomController();
+        //        $symptoms->create($request);
+//        }
 
 
         if ($consultation->save()) {

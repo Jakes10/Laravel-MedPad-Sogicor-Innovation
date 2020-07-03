@@ -16,10 +16,12 @@ class CreatePharmacistsTable extends Migration
         Schema::create('pharmacists', function (Blueprint $table) {
             $table->bigIncrements('pharmacist_id');
             $table->bigInteger('user_id')->unsigned();
-            $table->string('pharmacy');
-            $table->string('branch');
+            $table->bigInteger('pharmacy_address')->unsigned();
+            $table->string('pharmacy_name');
             $table->timestamps();
+
             $table->foreign('user_id')->references('user_id')->on('users');
+            $table->foreign('pharmacy_address')->references('address_id')->on('addresses');
 
         });
     }

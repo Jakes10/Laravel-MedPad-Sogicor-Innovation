@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Pharmacist;
+use App\Models\Pharmacist;
 use Illuminate\Http\Request;
 
 class PharmacistController extends Controller
@@ -20,24 +20,27 @@ class PharmacistController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return void
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function create(Request $request)
     {
+        $address = new AddressController();
+        $address->create($request);
+
         $this->validate($request, [
-            "password" => "min:6|required|confirmed",
-            "first_name" => "required",
-            "last_name" => "required",
-            "dob" => "required",
-            "gender" => "required",
-            "nationality" => "required",
-            "occupation" =>  "required",
-            "email" => "required",
-            "accountType" => "required", // Doctor Patient Pharmacist
+            "user_id" => "required",
+            "pharmacy_name" => "required",
+            "address_id" => "required",
 
         ]);
 
         $pharmacist = new Pharmacist();
+        $pharmacist->user_id = $request->user_id;
+        $pharmacist->pharmacy_name = $request->pharmacy_name;
+        $pharmacist->pharmacy_address = $request->address_id;
+        $pharmacist->save();
 
     }
 

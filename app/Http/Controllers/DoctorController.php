@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Doctor;
+use  App\Models\Doctor;
 use Illuminate\Http\Request;
 
 class DoctorController extends Controller
@@ -20,20 +20,26 @@ class DoctorController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return void
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function create(Request $request)
     {
+        $address = new AddressController();
+        $address->create($request);
+//
+
         $this->validate($request, [
 
-            "office_location" => "required",
             "user_id" => "required",
+            "address_id" => "required",
 
         ]);
 
-        $doctor = new \App\Models\Doctor();
+        $doctor = new Doctor();
         $doctor->user_id=$request->user_id;
-        $doctor->office_location=$request->office_location;
+        $doctor->office_location=$request->address_id;
         $doctor->save();
     }
 

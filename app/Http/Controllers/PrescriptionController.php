@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Prescription;
+use App\Models\Prescription;
 use Illuminate\Http\Request;
 
 class PrescriptionController extends Controller
@@ -20,11 +20,23 @@ class PrescriptionController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return void
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $this->validate($request, [
+            "consultation_id" => "required",
+            "medicine_code" => "required",
+
+        ]);
+
+        $visit = new Prescription();
+        $visit->consultation_id = $request->prescription_id;
+        $visit->medicine_code = $request->medicine_code;
+
+        $visit->save();
     }
 
     /**

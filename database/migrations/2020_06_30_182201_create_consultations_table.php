@@ -20,7 +20,7 @@ class CreateConsultationsTable extends Migration
             $table->string('year');
             $table->integer('month');
             $table->integer('day');
-            $table->string('doctor_remark');
+            $table->string('doctor_remark', 50);
 
             $table->timestamps();
             $table->foreign('patient_id')->references('patient_id')->on('patients');

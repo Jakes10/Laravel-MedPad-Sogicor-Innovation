@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\PharmacyVisit;
+
+use App\Models\PharmacyVisit;
 use Illuminate\Http\Request;
 
 class PharmacyVisitController extends Controller
@@ -20,11 +21,28 @@ class PharmacyVisitController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return void
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $this->validate($request, [
+            "consultation_id" => "required",
+            "pharmacist_id" => "required",
+            "year" => "required",
+            "month" => "required",
+            "day" => "required"
+
+        ]);
+
+        $visit = new PharmacyVisit();
+        $visit->consultation_id = $request->consultation_id;
+        $visit->pharmacist_id = $request->pharmacist_id;
+        $visit->year = $request->year;
+        $visit->month = $request->month;
+        $visit->day = $request->day;
+        $visit->save();
     }
 
     /**
