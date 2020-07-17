@@ -36,6 +36,8 @@ class SymptomController extends Controller
         $symptoms = new Symptom();
         $symptoms->name= $request->symptom_name;
         $symptoms->consultation_id= $request->consultation_id;
+        $symptoms->save();
+
     }
 
     /**

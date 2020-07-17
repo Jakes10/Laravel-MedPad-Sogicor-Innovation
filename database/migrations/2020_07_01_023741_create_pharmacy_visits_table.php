@@ -17,9 +17,6 @@ class CreatePharmacyVisitsTable extends Migration
             $table->bigIncrements('visitation_id');
             $table->bigInteger('consultation_id')->unsigned();
             $table->bigInteger('pharmacist_id')->unsigned();
-            $table->string('year');
-            $table->integer('month');
-            $table->integer('day');
             $table->timestamps();
 
             $table->foreign('consultation_id')->references('consultation_id')->on('consultations');

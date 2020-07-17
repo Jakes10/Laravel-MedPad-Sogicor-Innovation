@@ -17,7 +17,6 @@ class User extends Authenticatable
     private $dob;
     private $gender;
     private $nationality;
-    private $occupation;
     private $email;
     private $mobile;
     private $password;

@@ -39,9 +39,6 @@ class PharmacyVisitController extends Controller
         $visit = new PharmacyVisit();
         $visit->consultation_id = $request->consultation_id;
         $visit->pharmacist_id = $request->pharmacist_id;
-        $visit->year = $request->year;
-        $visit->month = $request->month;
-        $visit->day = $request->day;
         $visit->save();
     }
 

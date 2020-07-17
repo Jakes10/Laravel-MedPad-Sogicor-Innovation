@@ -11,4 +11,8 @@ class Disability extends Model
     private $patient_id;
     private $type;
 
+    public function Patient(){
+        return $this->hasMany(Patient::class, 'disability_id');
+    }
+
 }

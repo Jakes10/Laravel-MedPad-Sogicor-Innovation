@@ -17,10 +17,10 @@ class CreateConsultationsTable extends Migration
             $table->bigIncrements('consultation_id');
             $table->bigInteger('patient_id')->unsigned();
             $table->bigInteger('doctor_id')->unsigned();
-            $table->string('year');
-            $table->integer('month');
-            $table->integer('day');
+            $table->string('doctor_signature');
+            $table->string('consultation_type');
             $table->string('doctor_remark', 50);
+
 
             $table->timestamps();
             $table->foreign('patient_id')->references('patient_id')->on('patients');

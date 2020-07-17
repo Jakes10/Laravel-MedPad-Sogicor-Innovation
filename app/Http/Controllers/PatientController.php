@@ -32,11 +32,12 @@ class PatientController extends Controller
         $this->validate($request, [
 
             "user_id" => "required",
-
+//            "occupation" =>  "required",
         ]);
 
         $patient = new Patient();
         $patient->user_id=$request->user_id;
+        $patient->occupation= $request->occupation;
         $patient->emergency_contact=$request->emergency_contact;
         $patient->address=$request->address_id;
         $patient->save();
@@ -67,9 +68,10 @@ class PatientController extends Controller
      * @param  \App\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function show(Patient $patient)
+    public function show($patient_id)
     {
-        //
+        $consultationInfo =Patient::where('patient_id', $patient_id)->with(["Disability", "Address", "Consultation"])->get();
+        return  response()->json($consultationInfo, 200);
 
     }
 

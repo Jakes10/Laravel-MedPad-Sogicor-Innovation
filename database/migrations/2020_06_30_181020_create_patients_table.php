@@ -17,6 +17,7 @@ class CreatePatientsTable extends Migration
             $table->bigIncrements('patient_id');
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('address')->unsigned();
+            $table->string('occupation');
             $table->string('emergency_contact');
             $table->timestamps();
 

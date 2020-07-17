@@ -11,6 +11,7 @@ class Patient extends Model
     private $user_id;
     private $emergency_contact;
     private $address;
+    private $occupation;
 
 
 
@@ -23,6 +24,13 @@ class Patient extends Model
     {
         return $this->hasOne(Address::class, 'address_id');
     }
+
+    public function Disability()
+    {
+            return $this->hasMany(Disability::class, 'disability_id');
+    }
+
+
 
 //    public function PharmacyVisit()
 //    {

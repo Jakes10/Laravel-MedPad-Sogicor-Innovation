@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Consultation;
 use Illuminate\Http\Request;
 
@@ -30,10 +29,9 @@ class ConsultationController extends Controller
 
             "patient_id" => "required",
             "doctor_id" => "required",
-            "year" => "required",
-            "month" => "required",
-            "day" => "required",
-//            "doctor_remark" =>  "required",
+            "consultation_type" => "required",
+            "doctor_signature" => "required",
+//          "doctor_remark" =>  "required",
 
 
         ]);
@@ -41,10 +39,9 @@ class ConsultationController extends Controller
         $consultation = new Consultation();
         $consultation->patient_id= $request->patient_id;
         $consultation->doctor_id= $request->doctor_id;
-        $consultation->year= $request->year;
-        $consultation->month= $request->month;
-        $consultation->day= $request->day;
         $consultation->doctor_remark= $request->doctor_remark;
+        $consultation->consultation_type= $request->consultation_type;
+        $consultation->doctor_signature= $request->doctor_signature;
         $consultation->save();
 
         $request->request->add(['consultation_id' => $consultation->consultation_id]);
@@ -53,10 +50,15 @@ class ConsultationController extends Controller
         $vitals->create($request);
 
 
-//        if($request->symptom!=null){
-        //        $symptoms = new SymptomController();
-        //        $symptoms->create($request);
-//        }
+        if($request->medicine_code!=null){
+            $prescription = new PrescriptionController();
+            $prescription->create($request);
+        }
+
+        if($request->symptom_name!=null){
+            $symptoms = new SymptomController();
+            $symptoms->create($request);
+        }
 
 
         if ($consultation->save()) {
@@ -80,12 +82,15 @@ class ConsultationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Consultation  $consultation
-     * @return \Illuminate\Http\Response
+     * @param $consultation_id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Consultation $consultation)
+    public function show($patient_id)
     {
-        //
+
+        $consultationInfo =Consultation::where('patient_id', $patient_id)->get();//->with(["Symptom", "Vital", "Prescription"])
+        return  response()->json($consultationInfo, 200);
+
     }
 
     /**
@@ -97,6 +102,14 @@ class ConsultationController extends Controller
     public function edit(Consultation $consultation)
     {
         //
+    }
+
+    public function showSingleConsultation($consultation_id)
+    {
+
+        $consultationInfo =Consultation::where('consultation_id', $consultation_id)->with(["Symptom", "Vital", "Prescription"])->get();
+        return  response()->json($consultationInfo, 200);
+
     }
 
     /**

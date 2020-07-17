@@ -25,7 +25,7 @@ class Address extends Model
     }
 
     public function Pharmacist(){
-        return $this->hasOne(Pharmacist::class, 'pharmacy_address');
+        return $this->hasOne(Pharmacist::class, 'address_id');
 
     }
 }

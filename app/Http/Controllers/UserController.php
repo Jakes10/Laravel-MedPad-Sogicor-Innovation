@@ -19,7 +19,6 @@ class UserController extends Controller
             "dob" => "required",
             "gender" => "required",
             "nationality" => "required",
-            "occupation" =>  "required",
             "mobile" =>  "required",
             "email" => "required",
             "accountType" => "required", // Doctor Patient Pharmacist
@@ -32,7 +31,6 @@ class UserController extends Controller
         $user->dob=$request->dob;
         $user->gender=$request->gender;
         $user->nationality=$request->nationality;
-        $user->occupation= $request->occupation;
         $user->mobile= $request->mobile;
         $user->email=$request->email;
         $user->password=bcrypt($request->password);
@@ -65,7 +63,7 @@ class UserController extends Controller
     }
 
     public function show($user_id){
-        $account = User::where('user_id', $user_id)->with(["Patient", "Doctor", "Pharmacist"])->get();
+        $account = User::where('user_id', $user_id)->with(["Patient"])->get();//, "Doctor", "Pharmacist"
         return  response()->json($account, 200);
     }
 }

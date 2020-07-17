@@ -58,11 +58,12 @@ class DoctorController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Doctor  $doctor
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Doctor $doctor)
+    public function show($doctor_id)
     {
-        //
+        $doctorInfo = Doctor::where('doctor_id', $doctor_id)->with(["User"])->get();
+        return  response()->json($doctorInfo, 200);
     }
 
     /**

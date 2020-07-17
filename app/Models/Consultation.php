@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Vital;
 use Illuminate\Database\Eloquent\Model;
 
 class Consultation extends Model
@@ -10,12 +9,11 @@ class Consultation extends Model
     protected $primaryKey = "consultation_id";
     private $patient_id;
     private $doctor_id;
-    private $year;
-    private $month;
-    private $day;
     private $doctor_remark;
+    private $doctor_signature;
+    private $consultation_type;
 
-//   
+//
     public function Vital()
     {
         return $this->hasOne(Vital::class, 'consultation_id');

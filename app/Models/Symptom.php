@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Symptom extends Model
 {
     protected $primaryKey="symptom_id";
-    private $type;
+    private $name;
     private $consultation_id;
 
     public function Consultation()

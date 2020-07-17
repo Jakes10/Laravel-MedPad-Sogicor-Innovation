@@ -22,4 +22,9 @@ class Doctor extends Model
         return $this->hasMany(Consultation::class, 'doctor_id');
     }
 
+    public  function User(){
+        return $this->hasOne(User::class, 'user_id');
+
+    }
+
 }

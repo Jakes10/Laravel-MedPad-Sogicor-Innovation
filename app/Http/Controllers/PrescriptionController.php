@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Consultation;
 use App\Models\Prescription;
 use Illuminate\Http\Request;
 
@@ -32,11 +33,10 @@ class PrescriptionController extends Controller
 
         ]);
 
-        $visit = new Prescription();
-        $visit->consultation_id = $request->prescription_id;
-        $visit->medicine_code = $request->medicine_code;
-
-        $visit->save();
+        $prescription = new Prescription();
+        $prescription->consultation_id = $request->consultation_id;
+        $prescription->medicine_code = $request->medicine_code;
+        $prescription->save();
     }
 
     /**
@@ -53,12 +53,13 @@ class PrescriptionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Prescription  $prescription
-     * @return \Illuminate\Http\Response
+     * @param $patient_id
+     * @return void
      */
-    public function show(Prescription $prescription)
+    public function show($patient_id)
     {
-        //
+        $prescription = Consultation::where('patient_id', $patient_id)->with(["Prescription", "Address"])->get();
+        return  response()->json($prescription, 200);
     }
 
     /**
